@@ -5,15 +5,19 @@ import (
 )
 
 func BenchmarkShared(b *testing.B) {
-	shared := NewShared(256)
-	for n := 0; n < b.N; n++ {
-		shared.Increment(n & 255)
-	}
+	shared := NewShared()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			shared.Increment()
+		}
+	})
 }
 
 func BenchmarkPadded(b *testing.B) {
-	padded := NewPadded(256)
-	for n := 0; n < b.N; n++ {
-		padded.Increment(n & 255)
-	}
+	padded := NewPadded()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			padded.Increment()
+		}
+	})
 }
