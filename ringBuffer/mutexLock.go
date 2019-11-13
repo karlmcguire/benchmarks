@@ -20,7 +20,7 @@ func (b *mutexLock) Push(item uint64) {
 	b.data = append(b.data, item)
 	if len(b.data) == cap(b.data) {
 		b.consume(b.data)
+		b.data = b.data[:0]
 	}
-	b.data = b.data[:0]
 	b.Unlock()
 }

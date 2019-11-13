@@ -16,9 +16,12 @@ func (b *chanLock) Push(item uint64) {
 	select {
 	case b.items <- item:
 	default:
-		items := make([]uint64, 64)
+		items := make([]uint64, 0)
 		for len(b.items) > 0 {
 			items = append(items, <-b.items)
+			if len(items) == 64 {
+				break
+			}
 		}
 		b.consume(items)
 	}
