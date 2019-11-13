@@ -26,7 +26,7 @@ type Padded struct {
 
 type PaddedCounter struct {
 	counter uint64
-	_p      [8]uint64
+	_pad    [8]uint64
 }
 
 func NewPadded(size int) *Padded {
