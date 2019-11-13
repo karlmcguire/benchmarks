@@ -46,3 +46,13 @@ func BenchmarkMutexLock(b *testing.B) {
 		}
 	})
 }
+
+func BenchmarkChanLock(b *testing.B) {
+	buffer := newChanLock(consumer())
+	b.SetBytes(1)
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			buffer.Push(1)
+		}
+	})
+}
