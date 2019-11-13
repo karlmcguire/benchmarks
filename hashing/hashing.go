@@ -4,6 +4,8 @@ import (
 	"unsafe"
 
 	"github.com/cespare/xxhash"
+	"github.com/dchest/siphash"
+	farm "github.com/dgryski/go-farm"
 	"github.com/minio/highwayhash"
 )
 
@@ -32,4 +34,12 @@ func HighwayHash(str string) uint64 {
 
 func XXHash(str string) uint64 {
 	return xxhash.Sum64([]byte(str))
+}
+
+func FarmHash(str string) uint64 {
+	return farm.Hash64([]byte(str))
+}
+
+func SipHash(str string) uint64 {
+	return siphash.Hash(0, 0, []byte(str))
 }

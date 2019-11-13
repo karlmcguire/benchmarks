@@ -22,3 +22,17 @@ func BenchmarkXXHash(b *testing.B) {
 		XXHash("key")
 	}
 }
+
+func BenchmarkFarmHash(b *testing.B) {
+	b.SetBytes(1)
+	for n := 0; n < b.N; n++ {
+		FarmHash("key")
+	}
+}
+
+func BenchmarkSipHash(b *testing.B) {
+	b.SetBytes(1)
+	for n := 0; n < b.N; n++ {
+		SipHash("key")
+	}
+}
