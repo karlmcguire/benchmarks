@@ -7,36 +7,33 @@ type Counters interface {
 }
 
 type Shared struct {
-	c1 uint64
-	c2 uint64
-	c3 uint64
+	counters []uint64
 }
 
 func NewShared() *Shared {
-	return &Shared{}
+	return &Shared{
+		counters: make([]uint64, 3),
+	}
 }
 
 func (c *Shared) Increment() {
-	atomic.AddUint64(&c.c1, 1)
-	atomic.AddUint64(&c.c2, 1)
-	atomic.AddUint64(&c.c3, 1)
+	atomic.AddUint64(&c.counters[0], 1)
+	atomic.AddUint64(&c.counters[1], 1)
+	atomic.AddUint64(&c.counters[2], 1)
 }
 
 type Padded struct {
-	c1  uint64
-	_p1 [8]uint64
-	c2  uint64
-	_p2 [8]uint64
-	c3  uint64
-	_p3 [8]uint64
+	counters [][8]uint64
 }
 
 func NewPadded() *Padded {
-	return &Padded{}
+	return &Padded{
+		counters: make([][8]uint64, 3),
+	}
 }
 
 func (c *Padded) Increment() {
-	atomic.AddUint64(&c.c1, 1)
-	atomic.AddUint64(&c.c2, 1)
-	atomic.AddUint64(&c.c3, 1)
+	atomic.AddUint64(&c.counters[0][0], 1)
+	atomic.AddUint64(&c.counters[1][0], 1)
+	atomic.AddUint64(&c.counters[2][0], 1)
 }
